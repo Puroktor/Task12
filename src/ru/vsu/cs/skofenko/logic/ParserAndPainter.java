@@ -8,17 +8,21 @@ public class ParserAndPainter {
     private static int y;
 
     public static BufferedImage parseAndPaint(String text) {
-        text = text.replace(",", "");
-        TreeNode root = buildTree(text);
+        text = text.trim();
+        if (text.length() != 0) {
+            text = text.replace(",", "");
+            TreeNode root = buildTree(text);
 
-        MyBufferedImage img = new MyBufferedImage();
-        img.drawStringAndResize(root.getName(), 0, 16);
-        y = 32;
+            MyBufferedImage img = new MyBufferedImage();
+            img.drawStringAndResize(root.getName(), 0, 16);
+            y = 32;
 
-        List<Boolean> hasNext = new ArrayList<>();
-        hasNext.add(false);
-        paintTree(img, root, 0, hasNext);
-        return img.getBufferedImage();
+            List<Boolean> hasNext = new ArrayList<>();
+            hasNext.add(false);
+            paintTree(img, root, 0, hasNext);
+            return img.getBufferedImage();
+        }
+        return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
 
     private static void paintTree(MyBufferedImage img, TreeNode root, int x, List<Boolean> hasNextNode) {
@@ -42,14 +46,16 @@ public class ParserAndPainter {
 
     private static TreeNode buildTree(String str) {
         TreeNode node = new TreeNode();
+        str = str.substring(1, str.length() - 1);
+        str = str.trim();
         int index = str.indexOf(" ");
         if (index == -1) {
-            node.setName(str.substring(1, str.length() - 1));
+            node.setName(str);
             return node;
         }
-        node.setName(str.substring(1, index));
+        node.setName(str.substring(0, index));
 
-        String children = str.substring(index + 1, str.length() - 1);
+        String children = str.substring(index + 1);
         List<TreeNode> childrenList = new ArrayList<>();
 
         NodesBorderIndexes indexes = findBordersOfCurrentNodes(children);

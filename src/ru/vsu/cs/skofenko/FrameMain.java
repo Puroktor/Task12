@@ -22,6 +22,7 @@ public class FrameMain extends JFrame {
         constructButton.addActionListener(e -> {
             try {
                 BufferedImage img = ParserAndPainter.parseAndPaint(textField.getText());
+                labelImg.setText("");
                 labelImg.setIcon(new ImageIcon(img));
             } catch (Exception exception) {
                 SwingUtils.showErrorMessageBox(exception);
