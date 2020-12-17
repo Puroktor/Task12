@@ -20,10 +20,6 @@ public class MyBufferedImage {
         charWidth = g2d.getFontMetrics().charWidth('+');
     }
 
-    public int getCharWidth() {
-        return charWidth;
-    }
-
     public void drawStringAndResize(String text, int x, int y) {
         if (y > bufferedImage.getHeight() || x + text.length() * charWidth > bufferedImage.getWidth()) {
             BufferedImage resized = new BufferedImage(bufferedImage.getWidth() * 2, bufferedImage.getHeight() * 2,
